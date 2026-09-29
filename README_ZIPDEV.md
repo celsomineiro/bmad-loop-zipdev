@@ -58,6 +58,9 @@ uv run --project /home/celso/bmad-loop-zipdev bmad-loop <comando>
 
 ## Publicação
 
-Ainda não publicado no GitHub (sem `gh` CLI nem chave SSH configurada para GitHub nesta VPS no
-momento da criação deste fork). Repositório local em `/home/celso/bmad-loop-zipdev`, remotes:
-`upstream` = `https://github.com/bmad-code-org/bmad-loop.git`, sem `origin` ainda.
+Publicado em <https://github.com/celsomineiro/bmad-loop-zipdev>, branch `zipdev-patch`, tag
+`zipdev-2026-09-28` (28/09/2026). Instalação em produção deve apontar para essa branch/tag:
+
+```bash
+uv tool install "git+https://github.com/celsomineiro/bmad-loop-zipdev.git@zipdev-patch"
+```
