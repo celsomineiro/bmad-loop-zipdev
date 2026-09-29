@@ -608,7 +608,16 @@ def resolve_review_layers(project: Path, tree: str) -> ReviewResolution | None:
 # under its own name.
 STORIES_PROBE_SKILL = DEV_PRIMITIVE_LEGACY
 STORIES_PROBE_FILE = "step-01-clarify-and-route.md"
-STORIES_PROBE_TEXT = "folder+id dispatch"
+# ZIPDEV PATCH (prototype, 2026-09-28): upstream's "folder+id dispatch" marker
+# (BMAD-METHOD #2549, merged 2026-07-06) was itself superseded by the ticket-tree
+# dispatch system (tickets.toml / tickets.py find) that BMAD-METHOD shipped
+# 2026-09-11..26 — the currently published bmad-build-auto's step-01 no longer
+# contains the old marker text at all, so the probe would always fail even though
+# dispatch is possible again (via a different, newer mechanism). Our own
+# `_stories_dev_prompt` patch (above, in stories_engine.py) now emits a
+# ticket-tree reference instead of the old "Spec folder/Story id" phrasing, so we
+# probe for the marker that proves THAT mechanism is present instead.
+STORIES_PROBE_TEXT = "tickets.py"
 
 
 def missing_stories_support(project: Path, trees: Sequence[str]) -> list[Finding]:

@@ -2744,7 +2744,9 @@ def _dry_run_stories(
         # (Halt after planning + BMAD_LOOP_PLAN_HALT); mirror the real dispatch's
         # markers so dry-run does not under-report what run would emit.
         plan_halt = stories_mod.is_plan_halt_leg(row.spec_checkpoint, row.state)
-        dispatch = f"/{dev_skill} Spec folder: {rel}. Story id: {row.id}."
+        # ZIPDEV PATCH (prototype, 2026-09-28): mirror the real dispatch text in
+        # stories_engine.py's _stories_dev_prompt (same reasoning there).
+        dispatch = f"/{dev_skill} Ticket {row.id} in {rel} (resolve with tickets.py find)."
         if plan_halt:
             dispatch += " Halt after planning."
         print(f"    dev:    {_render_invocation(pol, paths.project, 'dev', dispatch)}")

@@ -436,9 +436,17 @@ class StoriesEngine(Engine):
                 f"in `{feedback}`."
             )
         entry = self._entry_for(task)
+        # ZIPDEV PATCH (prototype, 2026-09-28): the upstream "Spec folder: X. Story
+        # id: Y." dispatch was superseded by BMAD-METHOD's ticket-tree system
+        # (tickets.toml / tickets.py find) around 2026-09; the currently published
+        # bmad-build-auto no longer recognizes the old phrasing. `task.story_key`
+        # is already the ticket's bare integer id (ZipDev's own tickets.toml ->
+        # stories.yaml bridge preserves it 1:1), and `self._spec_folder_rel` is the
+        # epic folder tickets.py needs to disambiguate a bare id. Emit a reference
+        # bmad-build-auto's step-01 already knows how to resolve.
         prompt = (
-            f"/{self._dev_skill()} Spec folder: {self._spec_folder_rel}. "
-            f"Story id: {task.story_key}."
+            f"/{self._dev_skill()} Ticket {task.story_key} in "
+            f"{self._spec_folder_rel} (resolve with tickets.py find)."
         )
         if self._plan_halt_leg(task, entry):
             prompt += " Halt after planning."
